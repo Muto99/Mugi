@@ -1,0 +1,526 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pendaftaran Mahasiswa Baru - UTS Pemrograman Web II</title>
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #eef2f7;
+            margin: 0;
+            padding: 20px;
+            color: #1e2a3e;
+        }
+        .container {
+            max-width: 1400px;
+            margin: auto;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+            overflow: hidden;
+            padding: 20px 30px 30px 30px;
+        }
+        h1 {
+            text-align: center;
+            color: #0a4b6e;
+            border-bottom: 3px solid #0f6b8c;
+            display: inline-block;
+            width: auto;
+            margin: 0 auto 20px auto;
+            font-size: 1.8rem;
+        }
+        .header-title {
+            text-align: center;
+            margin-bottom: 25px;
+        }
+        .form-section {
+            background: #f8fafc;
+            border-radius: 16px;
+            padding: 20px;
+            margin-bottom: 30px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+            border: 1px solid #cbd5e1;
+        }
+        .form-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 15px 25px;
+            align-items: end;
+        }
+        .input-group {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+        .input-group label {
+            font-weight: 600;
+            color: #0c4e6e;
+            font-size: 0.85rem;
+        }
+        .input-group input, .input-group select {
+            padding: 10px 12px;
+            border: 1px solid #b9c8e0;
+            border-radius: 12px;
+            font-size: 0.9rem;
+            transition: 0.2s;
+            background: white;
+        }
+        .input-group input:focus, .input-group select:focus {
+            border-color: #2c7da0;
+            outline: none;
+            box-shadow: 0 0 0 2px rgba(44,125,160,0.2);
+        }
+        button {
+            background: #1e6f5c;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 40px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: 0.2s;
+            font-size: 0.9rem;
+        }
+        button:hover {
+            background: #0f5243;
+            transform: scale(1.02);
+        }
+        .btn-reset {
+            background: #475569;
+        }
+        .btn-reset:hover {
+            background: #334155;
+        }
+        .btn-danger {
+            background: #b91c1c;
+        }
+        .btn-danger:hover {
+            background: #991b1b;
+        }
+        .action-buttons {
+            display: flex;
+            gap: 12px;
+            justify-content: flex-end;
+            margin-top: 15px;
+            flex-wrap: wrap;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.8rem;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+        }
+        th {
+            background: #1e4663;
+            color: white;
+            padding: 10px 6px;
+            text-align: center;
+            font-weight: 600;
+        }
+        td {
+            border: 1px solid #cbd5e1;
+            padding: 8px 5px;
+            text-align: center;
+            background-color: #fff;
+        }
+        .table-wrapper {
+            overflow-x: auto;
+            margin-top: 20px;
+            border-radius: 12px;
+        }
+        .summary {
+            display: flex;
+            justify-content: space-between;
+            background: #e9f0f5;
+            padding: 12px 20px;
+            border-radius: 28px;
+            margin-top: 20px;
+            font-weight: bold;
+            flex-wrap: wrap;
+            gap: 12px;
+        }
+        .summary span {
+            color: #0f3b4f;
+        }
+        .keterangan-lulus {
+            color: #15803d;
+            font-weight: bold;
+        }
+        .keterangan-cadangan {
+            color: #b45309;
+            font-weight: bold;
+        }
+        .keterangan-tidak {
+            color: #b91c1c;
+            font-weight: bold;
+        }
+        footer {
+            font-size: 0.7rem;
+            text-align: center;
+            margin-top: 25px;
+            padding-top: 15px;
+            border-top: 1px solid #cbd5e1;
+            color: #4b5563;
+        }
+        @media (max-width: 700px) {
+            .container {
+                padding: 15px;
+            }
+            th, td {
+                font-size: 0.7rem;
+                padding: 5px 3px;
+            }
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <div class="header-title">
+        <h1>📋 PENDAFTARAN MAHASISWA BARU</h1>
+        <p style="color:#2c3e66;">UNIVERSITAS PAMULANG - TEKNIK INFORMATIKA</p>
+    </div>
+
+    <!-- FORM INPUT -->
+    <div class="form-section">
+        <h3 style="margin-top:0; color:#0a4b6e;">📝 Form Pendaftaran</h3>
+        <div class="form-grid">
+            <div class="input-group">
+                <label>KODE PENDAFTARAN * (otomatis)</label>
+                <input type="text" id="kode_pendaftaran" readonly placeholder="A2-101-9 contoh" style="background:#eef2ff;">
+            </div>
+            <div class="input-group">
+                <label>TEMPAT TES (Gedung)</label>
+                <select id="tempat_tes">
+                    <option value="A">Gedung A</option>
+                    <option value="B">Gedung B</option>
+                    <option value="V">Viktor</option>
+                </select>
+            </div>
+            <div class="input-group">
+                <label>BULAN TES (1 digit akhir)</label>
+                <select id="bulan_tes">
+                    <option value="1">Januari (1)</option><option value="2">Februari (2)</option><option value="3">Maret (3)</option>
+                    <option value="4">April (4)</option><option value="5">Mei (5)</option><option value="6">Juni (6)</option>
+                    <option value="7">Juli (7)</option><option value="8">Agustus (8)</option><option value="9">September (9)</option>
+                    <option value="10">Oktober (10)</option><option value="11">November (11)</option><option value="12">Desember (12)</option>
+                </select>
+            </div>
+            <div class="input-group">
+                <label>NAMA PENDAFTAR</label>
+                <input type="text" id="nama" placeholder="Nama lengkap">
+            </div>
+            <div class="input-group">
+                <label>JENIS KELAMIN</label>
+                <select id="jk">
+                    <option value="L">Laki-laki</option>
+                    <option value="P">Perempuan</option>
+                </select>
+            </div>
+            <div class="input-group">
+                <label>TELP / HP</label>
+                <input type="text" id="telp" placeholder="Nomor telepon">
+            </div>
+            <div class="input-group">
+                <label>ASAL SEKOLAH</label>
+                <input type="text" id="asal_sekolah" placeholder="Nama sekolah">
+            </div>
+            <div class="input-group">
+                <label>PEKERJAAN ORTU</label>
+                <input type="text" id="pekerjaan_ortu" placeholder="Pekerjaan orang tua">
+            </div>
+            <div class="input-group">
+                <label>NILAI MATEMATIKA</label>
+                <input type="number" id="nilai_mat" step="any" min="0" max="100" value="70">
+            </div>
+            <div class="input-group">
+                <label>NILAI BHS. INGGRIS</label>
+                <input type="number" id="nilai_inggris" step="any" min="0" max="100" value="70">
+            </div>
+            <div class="input-group">
+                <label>NILAI PENGETAHUAN UMUM</label>
+                <input type="number" id="nilai_umum" step="any" min="0" max="100" value="70">
+            </div>
+        </div>
+        <div class="action-buttons">
+            <button id="btnTambah">➕ Tambah Pendaftar</button>
+            <button id="btnResetForm" class="btn-reset">🗑 Reset Form</button>
+            <button id="btnHapusSemua" class="btn-danger">⚠️ Hapus Semua Data</button>
+        </div>
+    </div>
+
+    <!-- TABEL DATA PENDAFTAR -->
+    <div class="table-wrapper">
+        <table id="tabelPendaftar">
+            <thead>
+                <tr>
+                    <th>Kode Pendaftar</th><th>Nama Pendaftar</th><th>JK</th><th>Tempat Tes</th><th>Bln. Tes</th>
+                    <th>Pek. Ortu</th><th>Asal Sekolah</th><th>Tel.</th><th>MAT</th><th>INGG</th><th>UMUM</th><th>N. RATA</th><th>KETERANGAN</th><th>Aksi</th>
+                </tr>
+                </thead>
+                <tbody id="tbodyPendaftar">
+                <tr><td colspan="14" style="text-align:center;">Belum ada data pendaftar</td></tr>
+            </tbody>
+        </table>
+    </div>
+
+    <!-- Statistik -->
+    <div class="summary">
+        <span>📊 Jumlah Pendaftar: <strong id="jmlPendaftar">0</strong></span>
+        <span>✅ Lulus (Rata ≥70): <strong id="jmlLulus">0</strong></span>
+        <span>⚠️ Cadangan (60-70): <strong id="jmlCadangan">0</strong></span>
+        <span>❌ Tidak Lulus (<60): <strong id="jmlTidakLulus">0</strong></span>
+    </div>
+    <footer>
+        * Kode pendaftaran format: [Gedung][BulanTes]-[NoUrut]-[Bulan digit akhir]. Contoh: A2-101-9 <br>
+        ** Keterangan: Rata-rata ≥70 = Lulus ; 60–70 = Cadangan ; <60 = Tidak Lulus
+    </footer>
+</div>
+
+<script>
+    // Data array untuk menyimpan pendaftar (tanpa database)
+    let daftarPendaftar = [];
+
+    // Fungsi menghasilkan nomor urut (3 digit) berdasarkan jumlah pendaftar + 1
+    function getNomorUrut() {
+        let nextNumber = daftarPendaftar.length + 1;
+        return nextNumber.toString().padStart(3, '0');
+    }
+
+    // Membangkitkan kode pendaftaran otomatis dari tempat tes, bulan tes (digit terakhir), dan nomor urut
+    function generateKodePendaftaran(tempatTesKode, bulanTesValue, nomorUrut) {
+        // tempatTesKode: 'A', 'B', 'V'
+        // bulanTesValue: angka 1-12, ambil digit terakhir (ex: 12 -> '2', 9 -> '9', 10->'0')
+        let bulanDigit = (bulanTesValue % 10).toString();
+        // format: A2-101-9   -> contoh: tempat A, bulan digit 2, nomor urut 101, digit terakhir bulan 9? contoh di soal A2-101-9 
+        // di soal: 2 karakter awal untuk tempat tes dan gelombang? tapi penjelasan lanjut: A = Gedung A, dan 1 karakter akhir bulan tes. 
+        // sesuai kebijakan soal: kode = [tempat][digitBulan]-[nomorUrut]-[digitBulan]
+        // Namun contoh A2-101-9 : A tempat, digitBulan=2? kemudian setelah strip nomor urut 101, lalu bulan digit terakhir=9.
+        // ada kemungkinan digitBulan awal (2) beda dengan akhir (9)? Tapi aturan tertulis: 2 karakter awal tempat+gelombang? tapi tidak konsisten dengan contoh.
+        // Agar masuk akal dan sesuai tampilan tabel (ada kolom Tempat Tes & Bln. tes) maka kita format sederhana: [Gedung][DigitBulanPertama]-[NoUrut]-[DigitBulanAkhir]
+        // Biar rapi: digitBulanPertama diambil dari digit pertama bulan (jika bulan 1-9 maka digit itu sendiri, jika 10 => '1', 11=>'1',12=>'1') 
+        // di contoh A2-101-9: bulan tes mungkin September (9) -> digit pertama dari bulan?  2 dari mana? pusing.  
+        // Agar tetap logis: soal asli tidak terlalu jelas, tapi kita buat kode = [Gedung][digit terakhir bulan tes] - [NoUrut] - [digit terakhir bulan tes]
+        // sehingga misal bulan=9 => kode A9-001-9 ; bulan=12 => A2-001-2. mengikuti digit terakhir.
+        // Tapi karena ada kolom terpisah Tempat Tes dan Bulan Tes, kode hanya untuk identitas.
+        // Sesuaikan: tempatTesKode + digitTerakhirBulan + "-" + nomorUrut + "-" + digitTerakhirBulan
+        let lastDigitBulan = (bulanTesValue % 10).toString();
+        let kode = tempatTesKode + lastDigitBulan + "-" + nomorUrut + "-" + lastDigitBulan;
+        return kode;
+    }
+
+    // Hitung rata-rata dan keterangan
+    function hitungKeterangan(mat, inggris, umum) {
+        let rata = (parseFloat(mat) + parseFloat(inggris) + parseFloat(umum)) / 3;
+        let keterangan = "";
+        if (rata >= 70) keterangan = "Lulus";
+        else if (rata >= 60 && rata < 70) keterangan = "Cadangan";
+        else keterangan = "Tidak Lulus";
+        return { rata: rata.toFixed(2), keterangan };
+    }
+
+    // Menampilkan tabel dan update statistik
+    function renderTabel() {
+        const tbody = document.getElementById("tbodyPendaftar");
+        tbody.innerHTML = "";
+        if (daftarPendaftar.length === 0) {
+            tbody.innerHTML = '<tr><td colspan="14" style="text-align:center;">📭 Tidak ada data pendaftar</td></tr>';
+            document.getElementById("jmlPendaftar").innerText = "0";
+            document.getElementById("jmlLulus").innerText = "0";
+            document.getElementById("jmlCadangan").innerText = "0";
+            document.getElementById("jmlTidakLulus").innerText = "0";
+            return;
+        }
+
+        let jumlahLulus = 0, jumlahCadangan = 0, jumlahTidak = 0;
+        daftarPendaftar.forEach((item, idx) => {
+            let kelasKeterangan = "";
+            if (item.keterangan === "Lulus") {
+                kelasKeterangan = "keterangan-lulus";
+                jumlahLulus++;
+            } else if (item.keterangan === "Cadangan") {
+                kelasKeterangan = "keterangan-cadangan";
+                jumlahCadangan++;
+            } else {
+                kelasKeterangan = "keterangan-tidak";
+                jumlahTidak++;
+            }
+
+            let row = tbody.insertRow();
+            row.insertCell(0).innerText = item.kodePendaftaran;
+            row.insertCell(1).innerText = item.nama;
+            row.insertCell(2).innerText = item.jk;
+            row.insertCell(3).innerText = item.tempatTesNama;
+            row.insertCell(4).innerText = item.bulanTesNama + " (" + item.bulanDigit + ")";
+            row.insertCell(5).innerText = item.pekerjaanOrtu;
+            row.insertCell(6).innerText = item.asalSekolah;
+            row.insertCell(7).innerText = item.telp;
+            row.insertCell(8).innerText = item.nilaiMat;
+            row.insertCell(9).innerText = item.nilaiInggris;
+            row.insertCell(10).innerText = item.nilaiUmum;
+            row.insertCell(11).innerText = item.rataRata;
+            let tdKet = row.insertCell(12);
+            tdKet.innerHTML = `<span class="${kelasKeterangan}">${item.keterangan}</span>`;
+            let tdAksi = row.insertCell(13);
+            let btnHapus = document.createElement("button");
+            btnHapus.innerText = "Hapus";
+            btnHapus.style.backgroundColor = "#b91c1c";
+            btnHapus.style.padding = "4px 10px";
+            btnHapus.style.fontSize = "0.7rem";
+            btnHapus.style.borderRadius = "20px";
+            btnHapus.onclick = () => hapusData(idx);
+            tdAksi.appendChild(btnHapus);
+        });
+
+        document.getElementById("jmlPendaftar").innerText = daftarPendaftar.length;
+        document.getElementById("jmlLulus").innerText = jumlahLulus;
+        document.getElementById("jmlCadangan").innerText = jumlahCadangan;
+        document.getElementById("jmlTidakLulus").innerText = jumlahTidak;
+    }
+
+    // Hapus satu data
+    function hapusData(index) {
+        if (confirm("Hapus pendaftar ini?")) {
+            daftarPendaftar.splice(index, 1);
+            renderTabel();
+            // update form tidak otomatis reset isian, hanya refresh data tabel
+        }
+    }
+
+    // Fungsi untuk mengambil data dari form, validasi, lalu menambah ke array
+    function tambahPendaftar() {
+        // Ambil nilai dari form
+        let tempatTesKode = document.getElementById("tempat_tes").value; // A, B, V
+        let tempatTesNama = "";
+        if (tempatTesKode === "A") tempatTesNama = "Gedung A";
+        else if (tempatTesKode === "B") tempatTesNama = "Gedung B";
+        else tempatTesNama = "Viktor";
+
+        let bulanTesSelect = document.getElementById("bulan_tes");
+        let bulanTesValue = parseInt(bulanTesSelect.value);
+        let bulanTesNama = bulanTesSelect.options[bulanTesSelect.selectedIndex].text.split("(")[0].trim();
+        let bulanDigitAkhir = (bulanTesValue % 10).toString();
+
+        let nama = document.getElementById("nama").value.trim();
+        if (nama === "") {
+            alert("Nama pendaftar wajib diisi!");
+            return;
+        }
+        let jk = document.getElementById("jk").value;
+        let telp = document.getElementById("telp").value.trim();
+        if (telp === "") telp = "-";
+        let asalSekolah = document.getElementById("asal_sekolah").value.trim();
+        if (asalSekolah === "") asalSekolah = "-";
+        let pekerjaanOrtu = document.getElementById("pekerjaan_ortu").value.trim();
+        if (pekerjaanOrtu === "") pekerjaanOrtu = "-";
+        
+        let nilaiMat = parseFloat(document.getElementById("nilai_mat").value);
+        let nilaiInggris = parseFloat(document.getElementById("nilai_inggris").value);
+        let nilaiUmum = parseFloat(document.getElementById("nilai_umum").value);
+        if (isNaN(nilaiMat) || isNaN(nilaiInggris) || isNaN(nilaiUmum)) {
+            alert("Nilai harus diisi dengan angka 0-100");
+            return;
+        }
+        if (nilaiMat < 0 || nilaiMat > 100 || nilaiInggris < 0 || nilaiInggris > 100 || nilaiUmum < 0 || nilaiUmum > 100) {
+            alert("Nilai harus antara 0 sampai 100");
+            return;
+        }
+
+        // Generate nomor urut
+        let nomorUrut = getNomorUrut(); 
+        // Kode pendaftaran otomatis
+        let kodePendaftaran = generateKodePendaftaran(tempatTesKode, bulanTesValue, nomorUrut);
+        
+        // Hitung rata-rata dan keterangan
+        const { rata, keterangan } = hitungKeterangan(nilaiMat, nilaiInggris, nilaiUmum);
+        
+        // Simpan objek pendaftar
+        let pendaftarBaru = {
+            kodePendaftaran: kodePendaftaran,
+            nama: nama,
+            jk: jk,
+            tempatTesNama: tempatTesNama,
+            bulanTesNama: bulanTesNama,
+            bulanDigit: bulanDigitAkhir,
+            telp: telp,
+            asalSekolah: asalSekolah,
+            pekerjaanOrtu: pekerjaanOrtu,
+            nilaiMat: nilaiMat,
+            nilaiInggris: nilaiInggris,
+            nilaiUmum: nilaiUmum,
+            rataRata: rata,
+            keterangan: keterangan
+        };
+        
+        daftarPendaftar.push(pendaftarBaru);
+        renderTabel();
+        
+        // Reset form setelah tambah (biarkan tempat tes & bulan tes default namun bersihkan data text, kecuali kode akan otomatis generate berikutnya)
+        // Disarankan mereset input teks tetapi mempertahankan beberapa pilihan default
+        document.getElementById("nama").value = "";
+        document.getElementById("telp").value = "";
+        document.getElementById("asal_sekolah").value = "";
+        document.getElementById("pekerjaan_ortu").value = "";
+        document.getElementById("nilai_mat").value = "70";
+        document.getElementById("nilai_inggris").value = "70";
+        document.getElementById("nilai_umum").value = "70";
+        // reset jenis kelamin dan pilihan tempat tes / bulan bisa dibiarkan saja (tetap)
+        // Tampilkan info kode sample pada placeholder
+        let sampleTempat = document.getElementById("tempat_tes").value;
+        let sampleBulan = parseInt(document.getElementById("bulan_tes").value);
+        let sampleUrut = (daftarPendaftar.length + 1).toString().padStart(3,'0');
+        let sampleKode = generateKodePendaftaran(sampleTempat, sampleBulan, sampleUrut);
+        document.getElementById("kode_pendaftaran").value = `[Otomatis] ${sampleKode}`;
+    }
+
+    // Reset form (membersihkan semua input teks, set nilai default)
+    function resetForm() {
+        document.getElementById("tempat_tes").value = "A";
+        document.getElementById("bulan_tes").value = "9";  // September contoh
+        document.getElementById("nama").value = "";
+        document.getElementById("jk").value = "L";
+        document.getElementById("telp").value = "";
+        document.getElementById("asal_sekolah").value = "";
+        document.getElementById("pekerjaan_ortu").value = "";
+        document.getElementById("nilai_mat").value = "70";
+        document.getElementById("nilai_inggris").value = "70";
+        document.getElementById("nilai_umum").value = "70";
+        updatePreviewKode();
+    }
+
+    function updatePreviewKode() {
+        let tempat = document.getElementById("tempat_tes").value;
+        let bulanVal = parseInt(document.getElementById("bulan_tes").value);
+        let nextUrut = (daftarPendaftar.length + 1).toString().padStart(3,'0');
+        let preview = generateKodePendaftaran(tempat, bulanVal, nextUrut);
+        document.getElementById("kode_pendaftaran").value = `(Preview) ${preview}`;
+    }
+
+    // hapus semua data
+    function hapusSemuaData() {
+        if (confirm("⚠️ Hapus SEMUA data pendaftar? Tidak dapat dikembalikan!")) {
+            daftarPendaftar = [];
+            renderTabel();
+            updatePreviewKode();
+        }
+    }
+
+    // event listener dan live update kode saat ganti tempat/bulan
+    document.getElementById("tempat_tes").addEventListener("change", updatePreviewKode);
+    document.getElementById("bulan_tes").addEventListener("change", updatePreviewKode);
+    document.getElementById("btnTambah").addEventListener("click", tambahPendaftar);
+    document.getElementById("btnResetForm").addEventListener("click", resetForm);
+    document.getElementById("btnHapusSemua").addEventListener("click", hapusSemuaData);
+    
+    // inisialisasi tampilan kode preview
+    function init() {
+        resetForm();
+        renderTabel();
+    }
+    init();
+</script>
+</body>
+</html>
